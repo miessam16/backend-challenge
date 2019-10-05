@@ -37,12 +37,19 @@ export class NotificationService {
         const strategy = this.moduleRef.get<StrategyInterface>(method);
         const limit = parseInt(process.env[`${method}_LIMIT`]);
         let notification = await this.dequeue(method);
-        let i = await this.redisService.getClient().incr(method);
+        let i = 0;
+
+       if (notification) {
+            i = await this.redisService.getClient().incr(method);
+        } else {
+            return ;
+        }
 
         if (i === 1) {
             await this.redisService.getClient().expire(method, 60);
-        } else if (limit > i) {
+        } else if (limit < i) {
             await this.notificationQueueRepo.reset(notification.id);
+            return ;
         }
 
         while(i < limit && notification) {
@@ -50,7 +57,7 @@ export class NotificationService {
             const status = succeeded ? StatusEnum.SUCCEEDED : StatusEnum.FAILED;
             await this.notificationQueueRepo.finalize(notification.id, status);
             notification = await this.dequeue(method);
-            i++;
+            i = await this.redisService.getClient().incr(method);
         }
 
         Logger.log(`Done Sending ${method}, proceeded ${i} requests`, NotificationService.name);

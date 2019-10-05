@@ -16,6 +16,10 @@ import {RedisService} from "nestjs-redis";
     controllers: [
         NotificationsController,
     ],
+    exports: [
+        NotificationService,
+        NotificationQueueRepository
+    ],
     providers: [
         NotificationService,
         NotificationQueueRepository,
