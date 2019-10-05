@@ -1,5 +1,5 @@
 import {IsArray, IsIn, IsNotEmpty, Min, MinLength, ValidateNested} from "class-validator";
-import {StrategiesEnum} from "../../enums/strategies.enum";
+import {MethodsEnum} from "../../enums/methods.enum";
 import {Type} from "class-transformer";
 import {Recipient} from "../recipient";
 
@@ -7,8 +7,8 @@ export class CreateNotificationRequest {
     @IsNotEmpty()
     message: string;
     @IsNotEmpty()
-    @IsIn(Object.values(StrategiesEnum))
-    strategy: string;
+    @IsIn(Object.values(MethodsEnum))
+    method: string;
     @IsArray()
     @IsNotEmpty()
     @ValidateNested()

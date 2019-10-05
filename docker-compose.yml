@@ -3,6 +3,9 @@ services:
   web:
     environment:
       MONGO_URL: "mongodb://mongo:27017/notification-service"
+      REDIS_URL: "redis://redis:6379/1"
+      SMS_LIMIT: 1000
+      PUSH_NOTIFICATION_LIMTI: 200
     build: .
     volumes:
       - ./:/app
@@ -10,3 +13,7 @@ services:
       - "3000:3000"
   mongo:
     image: "mongo:3.4"
+    ports:
+      - "27017:27017"
+  redis:
+    image: "redis:5.0"
