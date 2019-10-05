@@ -1,6 +1,8 @@
 version: '3'
 services:
   web:
+    environment:
+      MONGO_URL: "mongodb://mongo:27017/notification-service"
     build: .
     volumes:
       - ./:/app
