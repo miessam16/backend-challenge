@@ -1,4 +1,4 @@
-import {Injectable} from "@nestjs/common";
+import {Injectable, Logger} from "@nestjs/common";
 import {NotificationQueueRepository} from "../repositories/notification-queue.repository";
 import {CreateNotificationRequest} from "../dtos/requests/create-notification.request";
 import {NotificationModel} from "../dtos/models/notification.model";
@@ -32,6 +32,8 @@ export class NotificationService {
     }
 
     async consume(method: string) {
+        Logger.log(`Start Sending ${method}`, NotificationService.name);
+
         const strategy = this.moduleRef.get<StrategyInterface>(method);
         const limit = parseInt(process.env[`${method}_LIMIT`]);
         let notification = await this.dequeue(method);
@@ -50,5 +52,7 @@ export class NotificationService {
             notification = await this.dequeue(method);
             i++;
         }
+
+        Logger.log(`Done Sending ${method}, proceeded ${i} requests`, NotificationService.name);
     }
 }
