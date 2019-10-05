@@ -1,7 +1,7 @@
 import {Injectable} from "@nestjs/common";
 import {NotificationQueueRepository} from "../repositories/notification-queue.repository";
 import {CreateNotificationRequest} from "../dtos/requests/create-notification.request";
-import {NotificationModel} from "../dtos/notification";
+import {NotificationModel} from "../dtos/models/notification.model";
 import {StatusEnum} from "../enums/status.enum";
 
 @Injectable()
