@@ -18,7 +18,8 @@ export const NotificationQueueSchema = new mongoose.Schema({
     },
     strategy: {
         type: String,
-        enum: Object.values(StrategiesEnum)
+        enum: Object.values(StrategiesEnum),
+        index: true
     },
     message: String,
     user: {
