@@ -4,5 +4,7 @@ export interface NotificationModel {
     message: string;
     status: string;
     strategy: string;
-    payload: Recipient
+    recipient: Recipient;
+    startTime?: Date;
+    endTime? : Date;
 }

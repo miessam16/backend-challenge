@@ -11,7 +11,7 @@ export class NotificationService {
     async enqueue(request: CreateNotificationRequest) {
         const notifications: NotificationModel[] = request.recipients.map(recipient => {
             return {
-                payload: recipient,
+                recipient: recipient,
                 message: request.message,
                 strategy: request.strategy,
                 status: StatusEnum.CREATED,

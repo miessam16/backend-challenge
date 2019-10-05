@@ -22,9 +22,9 @@ export const NotificationQueueSchema = new mongoose.Schema({
         index: true
     },
     message: String,
-    user: {
+    recipient: {
         type: new mongoose.Schema({
             phoneNumber: String,
-        })
+        }, {_id: false})
     }
 });
