@@ -15,10 +15,8 @@ export class JobService extends NestSchedule {
         await this.notificationService.consume(MethodsEnum.SMS);
     }
 
-
-
-    // @Interval(60000)
-    // async pushNotificationJob() {
-    //     await this.notificationService.consume(MethodsEnum.PUSH_NOTIFICATION);
-    // }
+    @Cron('* * * * *', {key: MethodsEnum.SMS})
+    async pushNotificationJob() {
+        await this.notificationService.consume(MethodsEnum.PUSH_NOTIFICATION);
+    }
 }
