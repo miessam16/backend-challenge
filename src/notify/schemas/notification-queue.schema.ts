@@ -20,10 +20,10 @@ export const NotificationQueueSchema = new mongoose.Schema({
         type: String,
         enum: Object.values(StrategiesEnum)
     },
-    payload: {
+    message: String,
+    user: {
         type: new mongoose.Schema({
             phoneNumber: String,
-            message: String,
         })
     }
 });
