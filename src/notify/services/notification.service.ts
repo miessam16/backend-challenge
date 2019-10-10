@@ -1,15 +1,16 @@
-import {ModuleRef} from '@nestjs/core';
-import {I18nService} from 'nestjs-i18n';
-import {StatusEnum} from '../enums/status.enum';
-import {Injectable, Logger} from '@nestjs/common';
-import {StrategyInterface} from '../strategies/strategy.interface';
-import {NotificationModel} from '../dtos/models/notification.model';
-import {CreateNotificationRequest} from '../dtos/requests/create-notification.request';
-import {NotificationQueueRepository} from '../repositories/notification-queue.repository';
+import { ModuleRef } from '@nestjs/core';
+import { I18nService } from 'nestjs-i18n';
+import { StatusEnum } from '../enums/status.enum';
+import { Injectable, Logger } from '@nestjs/common';
+import { StrategyInterface } from '../strategies/strategy.interface';
+import { NotificationModel } from '../dtos/models/notification.model';
+import { CreateNotificationRequest } from '../dtos/requests/create-notification.request';
+import { NotificationQueueRepository } from '../repositories/notification-queue.repository';
 
 @Injectable()
 export class NotificationService {
-    constructor(private notificationQueueRepo: NotificationQueueRepository, private moduleRef: ModuleRef, private translationService: I18nService) {}
+    constructor(private notificationQueueRepo: NotificationQueueRepository, private moduleRef: ModuleRef, private translationService: I18nService) {
+    }
 
     async enqueue(request: CreateNotificationRequest) {
         const notifications: NotificationModel[] =
@@ -36,7 +37,10 @@ export class NotificationService {
 
         for (const notification of notifications) {
             Logger.log(`Sending ${method} to ${notification.recipient.device}`, NotificationService.name);
-            const options = {args: notification.recipient.messageParameters, lang: notification.recipient.preferredLanguage};
+            const options = {
+                args: notification.recipient.messageParameters,
+                lang: notification.recipient.preferredLanguage
+            };
             const message = this.translationService.translate(`messages.${notification.messageCode}`, options);
             const hasSucceeded = await strategy.send(notification.recipient, message);
             const status = hasSucceeded ? StatusEnum.SUCCEEDED : StatusEnum.FAILED;
