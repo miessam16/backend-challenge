@@ -9,16 +9,6 @@ export class NotificationsController {
 
     @Post()
     create(@Body() request: CreateNotificationRequest) {
-        if (request.recipients.length < 1) {
-            throw new BadRequestException();
-        }
-
-        const message = this.translateService.translate(`messages.${request.messageCode}`);
-
-        if (message === `messages.${request.messageCode}`) {
-            throw new BadRequestException();
-        }
-
         return this.notificationService.enqueue(request);
     }
 }
