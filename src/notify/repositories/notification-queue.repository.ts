@@ -12,8 +12,12 @@ export class NotificationQueueRepository {
         return this.notificationQueueModel.insertMany(notifications);
     }
 
+    get(method: string, limit: number) {
+        return this.notificationQueueModel.find({method, status: StatusEnum.CREATED}).limit(limit);
+    }
+
     finalize(id: string, status: string) {
-        return this.notificationQueueModel.updateOne({_id: id}, {status, endTime: new Date()});
+        return this.notificationQueueModel.updateOne({_id: id}, {status});
     }
 
     reset(id: string) {

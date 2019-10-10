@@ -23,7 +23,7 @@ export const NotificationQueueSchema = new mongoose.Schema(
         recipient: {
             type: new mongoose.Schema({
                 device: String, // phone number || device id according to selected method
-                messageParameters: Array,
+                messageParameters: Object,
                 preferredLanguage: {
                     type: String,
                     enum: Object.values(LanguagesEnum)

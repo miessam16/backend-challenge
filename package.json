@@ -28,6 +28,7 @@
     "class-validator": "^0.10.1",
     "mongoose": "^5.7.3",
     "nest-schedule": "^0.6.3",
+    "nestjs-i18n": "^4.0.6",
     "nestjs-redis": "^1.2.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",

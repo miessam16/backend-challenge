@@ -6,6 +6,7 @@ services:
       REDIS_URL: "redis://redis:6379/1"
       SMS_LIMIT: 5
       PUSH_NOTIFICATION_LIMTI: 200
+      DEFAULT_LANGUAGE: "en"
     build: .
     volumes:
       - ./:/app

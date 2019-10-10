@@ -5,11 +5,11 @@ import {NotificationModel} from "../dtos/models/notification.model";
 import {StatusEnum} from "../enums/status.enum";
 import {ModuleRef} from "@nestjs/core";
 import {StrategyInterface} from "../strategies/strategy.interface";
-import {RedisService} from "nestjs-redis";
+import {I18nService} from "nestjs-i18n";
 
 @Injectable()
 export class NotificationService {
-    constructor(private notificationQueueRepo: NotificationQueueRepository, private moduleRef: ModuleRef) {}
+    constructor(private notificationQueueRepo: NotificationQueueRepository, private moduleRef: ModuleRef, private translationService: I18nService) {}
 
     async enqueue(request: CreateNotificationRequest) {
         const notifications: NotificationModel[] =
@@ -32,7 +32,18 @@ export class NotificationService {
 
         const strategy = this.moduleRef.get<StrategyInterface>(method);
         const limit = parseInt(process.env[`${method}_LIMIT`]);
+        const notifications = await this.notificationQueueRepo.get(method, limit);
 
-        Logger.log(`Done Sending ${method}, proceeded  requests`, NotificationService.name);
+        for (const notification of notifications) {
+            Logger.log(`Sending ${method} to ${notification.recipient.device}`, NotificationService.name);
+            const options = {args: notification.recipient.messageParameters, lang: notification.recipient.preferredLanguage};
+            const message = this.translationService.translate(`messages.${notification.messageCode}`, options);
+            const hasSucceeded = await strategy.send(notification.recipient, message);
+            const status = hasSucceeded ? StatusEnum.SUCCEEDED : StatusEnum.FAILED;
+            await this.notificationQueueRepo.finalize(notification.id, status);
+            Logger.log(`Sending ${method} to ${notification.recipient.device} has ${status}`, NotificationService.name);
+        }
+
+        Logger.log(`Done Sending ${method} requests`, NotificationService.name);
     }
 }
