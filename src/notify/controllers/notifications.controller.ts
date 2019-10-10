@@ -1,4 +1,3 @@
-import { I18nService } from 'nestjs-i18n';
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiResponse } from '@nestjs/swagger';
 import { NotificationService } from '../services/notification.service';
@@ -6,7 +5,7 @@ import { CreateNotificationRequest } from '../dtos/requests/create-notification.
 
 @Controller('notifications')
 export class NotificationsController {
-    constructor(private notificationService: NotificationService, private translateService: I18nService) {
+    constructor(private notificationService: NotificationService) {
     }
 
     @Post()
