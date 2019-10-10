@@ -5,7 +5,7 @@ import {Recipient} from "../recipient";
 
 export class CreateNotificationRequest {
     @IsNotEmpty()
-    message: string;
+    messageCode: string;
     @IsNotEmpty()
     @IsIn(Object.values(MethodsEnum))
     method: string;

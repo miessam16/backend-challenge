@@ -1,10 +1,9 @@
 import {Recipient} from "../recipient";
 
 export interface NotificationModel {
-    message: string;
+    messageCode: string;
     status: string;
     method: string;
     recipient: Recipient;
-    startTime?: Date;
-    endTime? : Date;
+    createdAt?: Date;
 }

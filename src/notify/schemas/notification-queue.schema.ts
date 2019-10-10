@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import {StatusEnum} from "../enums/status.enum";
 import {MethodsEnum} from "../enums/methods.enum";
+import {LanguagesEnum} from "../enums/languages.enum";
 
 export const NotificationQueueSchema = new mongoose.Schema(
     {
@@ -9,23 +10,24 @@ export const NotificationQueueSchema = new mongoose.Schema(
             enum: Object.values(StatusEnum),
             index: true
         },
-        startTime: {
+        createdAt: {
             type: Date,
-            default: null
-        },
-        endTime: {
-            type: Date,
-            default: null
+            default: new Date()
         },
         method: {
             type: String,
             enum: Object.values(MethodsEnum),
             index: true
         },
-        message: String,
+        messageCode: String,
         recipient: {
             type: new mongoose.Schema({
-                phoneNumber: String,
+                device: String, // phone number || device id according to selected method
+                messageParameters: Array,
+                preferredLanguage: {
+                    type: String,
+                    enum: Object.values(LanguagesEnum)
+                }
             }, {_id: false})
         }
     }

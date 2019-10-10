@@ -16,7 +16,7 @@ export class NotificationService {
             request.recipients.map(recipient => {
                 return {
                     recipient: recipient,
-                    message: request.message,
+                    messageCode: request.messageCode,
                     method: request.method,
                     status: StatusEnum.CREATED,
                 };
@@ -25,10 +25,6 @@ export class NotificationService {
         const result = await this.notificationQueueRepo.enqueue(notifications);
 
         return {success: result.length > 0};
-    }
-
-    dequeue(method: string) {
-        return this.notificationQueueRepo.dequeue(method);
     }
 
     async consume(method: string) {

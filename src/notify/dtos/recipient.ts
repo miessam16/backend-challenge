@@ -1,11 +1,11 @@
-import {IsIn, IsNotEmpty, IsPhoneNumber} from "class-validator";
+import {IsIn, IsNotEmpty} from "class-validator";
 import {LanguagesEnum} from "../enums/languages.enum";
 
 export class Recipient {
     @IsNotEmpty()
-    @IsPhoneNumber('EG')
-    phoneNumber: string;
+    device: string;
     @IsNotEmpty()
     @IsIn(Object.values(LanguagesEnum))
-    preferredLanguage: string
+    preferredLanguage: string;
+    messageParameters?: {[key: string]: string};
 }
