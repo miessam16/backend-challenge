@@ -20,6 +20,11 @@ export const NotificationQueueSchema = new mongoose.Schema(
             index: true
         },
         messageCode: String,
+        tries: {
+            type: Number,
+            default: 0,
+            index: true,
+        },
         recipient: {
             type: new mongoose.Schema({
                 device: String, // phone number || device id according to selected method

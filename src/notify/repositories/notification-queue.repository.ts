@@ -13,14 +13,10 @@ export class NotificationQueueRepository {
     }
 
     get(method: string, limit: number) {
-        return this.notificationQueueModel.find({method, status: StatusEnum.CREATED}).limit(limit);
+        return this.notificationQueueModel.find({method, status: {$ne: StatusEnum.SUCCEEDED}, tries: {$lt: parseInt(process.env.MAXIMUM_TRIES)}}).limit(limit);
     }
 
     finalize(id: string, status: string) {
-        return this.notificationQueueModel.updateOne({_id: id}, {status});
-    }
-
-    reset(id: string) {
-        return this.notificationQueueModel.updateOne({_id: id}, {status: StatusEnum.CREATED, startTime: null});
+        return this.notificationQueueModel.updateOne({_id: id}, {status, $inc: {tries: 1}});
     }
 }
