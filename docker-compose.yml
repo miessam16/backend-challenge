@@ -8,6 +8,7 @@ services:
       PUSH_NOTIFICATION_LIMTI: 200
       DEFAULT_LANGUAGE: "en"
       MAXIMUM_TRIES: 3
+      PORT: 3000
     build: .
     volumes:
       - ./:/app
