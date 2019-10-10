@@ -1,7 +1,7 @@
-import {Recipient} from "../../dtos/recipient";
-import {Observable, of} from "rxjs";
-import {Injectable} from "@nestjs/common";
-import {StrategyInterface} from "../strategy.interface";
+import { of } from 'rxjs';
+import { Injectable } from '@nestjs/common';
+import { Recipient } from '../../dtos/recipient';
+import { StrategyInterface } from '../strategy.interface';
 
 @Injectable()
 export class MockPushNotificationStrategy implements StrategyInterface {

@@ -1,6 +1,6 @@
-import {ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface} from "class-validator";
-import {I18nService} from "nestjs-i18n";
-import {app} from "../../main";
+import { app } from '../../main';
+import { I18nService } from 'nestjs-i18n';
+import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 
 @ValidatorConstraint({name: 'messageNotFound', async: false})
 export class MessageCodeValidator implements ValidatorConstraintInterface {

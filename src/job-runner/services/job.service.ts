@@ -1,7 +1,7 @@
-import {Injectable} from "@nestjs/common";
-import {Cron, NestSchedule } from 'nest-schedule';
-import {NotificationService} from "../../notify/services/notification.service";
-import {MethodsEnum} from "../../notify/enums/methods.enum";
+import { Injectable } from '@nestjs/common';
+import { Cron, NestSchedule } from 'nest-schedule';
+import { MethodsEnum } from '../../notify/enums/methods.enum';
+import { NotificationService } from '../../notify/services/notification.service';
 
 
 @Injectable()

@@ -1,11 +1,11 @@
-import {Injectable, Logger} from "@nestjs/common";
-import {NotificationQueueRepository} from "../repositories/notification-queue.repository";
-import {CreateNotificationRequest} from "../dtos/requests/create-notification.request";
-import {NotificationModel} from "../dtos/models/notification.model";
-import {StatusEnum} from "../enums/status.enum";
-import {ModuleRef} from "@nestjs/core";
-import {StrategyInterface} from "../strategies/strategy.interface";
-import {I18nService} from "nestjs-i18n";
+import {ModuleRef} from '@nestjs/core';
+import {I18nService} from 'nestjs-i18n';
+import {StatusEnum} from '../enums/status.enum';
+import {Injectable, Logger} from '@nestjs/common';
+import {StrategyInterface} from '../strategies/strategy.interface';
+import {NotificationModel} from '../dtos/models/notification.model';
+import {CreateNotificationRequest} from '../dtos/requests/create-notification.request';
+import {NotificationQueueRepository} from '../repositories/notification-queue.repository';
 
 @Injectable()
 export class NotificationService {

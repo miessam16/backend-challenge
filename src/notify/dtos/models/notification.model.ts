@@ -1,4 +1,4 @@
-import {Recipient} from "../recipient";
+import { Recipient } from '../recipient';
 
 export interface NotificationModel {
     messageCode: string;

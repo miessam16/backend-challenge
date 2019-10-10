@@ -1,7 +1,7 @@
-import {Module} from "@nestjs/common";
-import { ScheduleModule } from "nest-schedule";
-import {NotifyModule} from "../notify/notify.module";
-import {JobService} from "./services/job.service";
+import { Module } from '@nestjs/common';
+import { ScheduleModule } from 'nest-schedule';
+import { JobService } from './services/job.service';
+import { NotifyModule } from '../notify/notify.module';
 
 @Module({
     imports: [
@@ -12,4 +12,5 @@ import {JobService} from "./services/job.service";
         JobService
     ]
 })
-export class JobRunnerModule {}
+export class JobRunnerModule {
+}
