@@ -9,7 +9,7 @@ import {RedisService} from "nestjs-redis";
 
 @Injectable()
 export class NotificationService {
-    constructor(private notificationQueueRepo: NotificationQueueRepository, private moduleRef: ModuleRef, private redisService: RedisService) {}
+    constructor(private notificationQueueRepo: NotificationQueueRepository, private moduleRef: ModuleRef) {}
 
     async enqueue(request: CreateNotificationRequest) {
         const notifications: NotificationModel[] =
@@ -36,30 +36,7 @@ export class NotificationService {
 
         const strategy = this.moduleRef.get<StrategyInterface>(method);
         const limit = parseInt(process.env[`${method}_LIMIT`]);
-        let notification = await this.dequeue(method);
-        let i = 0;
 
-       if (notification) {
-            i = await this.redisService.getClient().incr(method);
-        } else {
-            return ;
-        }
-
-        if (i === 1) {
-            await this.redisService.getClient().expire(method, 60);
-        } else if (limit < i) {
-            await this.notificationQueueRepo.reset(notification.id);
-            return ;
-        }
-
-        while(i < limit && notification) {
-            const succeeded = await strategy.send(notification.recipient, notification.message);
-            const status = succeeded ? StatusEnum.SUCCEEDED : StatusEnum.FAILED;
-            await this.notificationQueueRepo.finalize(notification.id, status);
-            notification = await this.dequeue(method);
-            i = await this.redisService.getClient().incr(method);
-        }
-
-        Logger.log(`Done Sending ${method}, proceeded ${i} requests`, NotificationService.name);
+        Logger.log(`Done Sending ${method}, proceeded  requests`, NotificationService.name);
     }
 }

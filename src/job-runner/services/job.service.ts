@@ -12,11 +12,11 @@ export class JobService extends NestSchedule {
 
     @Cron('* * * * *', {key: MethodsEnum.SMS})
     async smsJob() {
-        await this.notificationService.consume(MethodsEnum.SMS);
+        //await this.notificationService.consume(MethodsEnum.SMS);
     }
 
     @Cron('* * * * *', {key: MethodsEnum.SMS})
     async pushNotificationJob() {
-        await this.notificationService.consume(MethodsEnum.PUSH_NOTIFICATION);
+        //await this.notificationService.consume(MethodsEnum.PUSH_NOTIFICATION);
     }
 }
