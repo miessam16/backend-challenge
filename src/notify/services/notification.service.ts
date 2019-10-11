@@ -31,24 +31,27 @@ export class NotificationService {
     async consume(method: string) {
         Logger.log(`Start Sending ${method}`, NotificationService.name);
 
-        const strategy = this.moduleRef.get<StrategyInterface>(method);
         const limit = parseInt(process.env[`${method}_LIMIT`]);
         const notifications = this.notificationQueueRepo.get(method, limit);
-        let notification = null;
 
-        while (notification = await notifications.next()) {
-            Logger.log(`Sending ${method} to ${notification.recipient.device}`, NotificationService.name);
-            const options = {
-                args: notification.recipient.messageParameters,
-                lang: notification.recipient.preferredLanguage
-            };
-            const message = this.translationService.translate(`messages.${notification.messageCode}`, options);
-            const hasSucceeded = await strategy.send(notification.recipient, message);
-            const status = hasSucceeded ? StatusEnum.SUCCEEDED : StatusEnum.FAILED;
-            await this.notificationQueueRepo.finalize(notification.id, status);
-            Logger.log(`Sending ${method} to ${notification.recipient.device} has ${status}`, NotificationService.name);
+        for await (const notification of notifications) {
+            await this.processNotification(notification, method);
         }
 
         Logger.log(`Done Sending ${method} requests`, NotificationService.name);
+    }
+
+    async processNotification(notification, method) {
+        Logger.log(`Sending ${method} to ${notification.recipient.device}`, NotificationService.name);
+        const strategy = this.moduleRef.get<StrategyInterface>(method);
+        const options = {
+            args: notification.recipient.messageParameters,
+            lang: notification.recipient.preferredLanguage
+        };
+        const message = this.translationService.translate(`messages.${notification.messageCode}`, options);
+        const hasSucceeded = await strategy.send(notification.recipient, message);
+        const status = hasSucceeded ? StatusEnum.SUCCEEDED : StatusEnum.FAILED;
+        await this.notificationQueueRepo.finalize(notification.id, status);
+        Logger.log(`Sending ${method} to ${notification.recipient.device} has ${status}`, NotificationService.name);
     }
 }
