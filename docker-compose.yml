@@ -15,5 +15,3 @@ services:
       - "3000:3000"
   mongo:
     image: "mongo:3.4"
-    ports:
-      - "27017:27017"

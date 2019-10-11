@@ -8,9 +8,10 @@ COPY ./test /app/test
 COPY i18n/ar/messages.json /app/i18n/ar/messages.json
 COPY i18n/en/messages.json /app/i18n/en/messages.json
 
-RUN npm install
-#RUN npm run build to be run on the production
+RUN npm install --silent
+RUN npm run test
+RUN npm run build
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start:prod"]
