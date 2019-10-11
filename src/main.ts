@@ -2,7 +2,7 @@ import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { BadRequestExceptionFilter } from './core/filters/bad-request-exception..filter';
+import { BadRequestExceptionFilter } from './core/filters/bad-request-exception.filter';
 
 export let app: INestApplication;
 
