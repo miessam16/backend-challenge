@@ -33,9 +33,10 @@ export class NotificationService {
 
         const strategy = this.moduleRef.get<StrategyInterface>(method);
         const limit = parseInt(process.env[`${method}_LIMIT`]);
-        const notifications = await this.notificationQueueRepo.get(method, limit);
+        const notifications = this.notificationQueueRepo.get(method, limit);
+        let notification = null;
 
-        for (const notification of notifications) {
+        while (notification = await notifications.next()) {
             Logger.log(`Sending ${method} to ${notification.recipient.device}`, NotificationService.name);
             const options = {
                 args: notification.recipient.messageParameters,

@@ -1,6 +1,6 @@
 import * as path from 'path';
-import { I18nModule } from 'nestjs-i18n';
 import { Module } from '@nestjs/common';
+import { I18nModule } from 'nestjs-i18n';
 import { MongooseModule } from '@nestjs/mongoose';
 import { NotifyModule } from './notify/notify.module';
 import { JobRunnerModule } from "./job-runner/job-runner.module";

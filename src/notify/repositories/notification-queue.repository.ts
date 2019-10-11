@@ -1,8 +1,8 @@
+import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { NotificationModel } from '../dtos/models/notification.model';
 import { StatusEnum } from '../enums/status.enum';
+import { NotificationModel } from '../dtos/models/notification.model';
 
 @Injectable()
 export class NotificationQueueRepository {
@@ -18,7 +18,7 @@ export class NotificationQueueRepository {
             method,
             status: {$ne: StatusEnum.SUCCEEDED},
             tries: {$lt: parseInt(process.env.MAXIMUM_TRIES)}
-        }).limit(limit);
+        }).limit(limit).cursor();
     }
 
     finalize(id: string, status: string) {

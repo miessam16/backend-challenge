@@ -3,7 +3,6 @@ services:
   web:
     environment:
       MONGO_URL: "mongodb://mongo:27017/notification-service"
-      REDIS_URL: "redis://redis:6379/1"
       SMS_LIMIT: 5
       PUSH_NOTIFICATION_LIMTI: 200
       DEFAULT_LANGUAGE: "en"

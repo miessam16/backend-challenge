@@ -1,4 +1,4 @@
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
 import { StatusEnum } from '../enums/status.enum';
 import { MethodsEnum } from '../enums/methods.enum';
 import { LanguagesEnum } from '../enums/languages.enum';
