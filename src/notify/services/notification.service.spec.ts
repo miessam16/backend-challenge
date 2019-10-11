@@ -51,7 +51,7 @@ describe('Notification Service', () => {
         expect(spyOnEnqueue).toBeCalledWith(callingRepositoryParameters)
     });
 
-    it('should consume and process notifications', async function () {
+    it('should consume and process notifications', async () => {
         const spyOnRepositoryGetMethod = jest.spyOn(notificationQueueRepository, 'get');
         const spyOnProcessNotification = jest.spyOn(notificationService, 'processNotification');
         await notificationService.consume(method);
@@ -60,7 +60,7 @@ describe('Notification Service', () => {
         expect(spyOnProcessNotification).toBeCalledTimes(notificationsLength);
     });
 
-    it('should send notification and set status', async function () {
+    it('should send notification and set status', async () => {
         const translationService = module.get(I18nService);
         const strategy = module.get(method);
         const spyOnGet = jest.spyOn(module.get(ModuleRef), 'get');
