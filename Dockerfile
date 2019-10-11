@@ -4,7 +4,6 @@ WORKDIR /app
 
 COPY tslint.json nest-cli.json tsconfig.json package.json nest-cli.json tsconfig.build.json /app/
 COPY ./src /app/src
-COPY ./test /app/test
 COPY i18n/ar/messages.json /app/i18n/ar/messages.json
 COPY i18n/en/messages.json /app/i18n/en/messages.json
 
