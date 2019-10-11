@@ -20,6 +20,7 @@ A notifications microservice which responsible for sending notifications to diff
 ```
 - The `device` proberty can be used to pass phone number or mobile device token depends on the method you are using, moreover you can add more recipients.
 - Message codes can be found on `/i18n` directory
+> Messages can have parameters and this is the usage for `messageParameters`
 - The service then enqueue your notifications into a mongo collection.
 - Every minute a job for every method (SMS, Push Notifications) is being run and start sending notifications to their providers
 > Each provider has a limit per minute which can be found on the environment varriable check `docker-compose.yml`.
